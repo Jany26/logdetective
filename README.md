@@ -21,9 +21,9 @@ For locally setting up the FastAPI server, you would need a postgresql and some 
 
 Log Detective has been built as inference agnostic service. The only requirement, is that the inference server must provide OpenAI API.
 
-We provide two example deployment configurations. The [development configuration](./docker-compose-dev.yaml) is intended for local testing of changes, and uses own [llama.cpp server image](https://github.com/ggml-org/llama.cpp/pkgs/container/llama.cpp).
+We provide two example deployment configurations. The [development configuration](./containers/docker-compose-dev.yaml) is intended for local testing of changes, and uses own [llama.cpp server image](https://github.com/ggml-org/llama.cpp/pkgs/container/llama.cpp).
 
-The sample [production](./docker-compose-prod.yaml) configuration, uses 4 load balanced [vLLM](https://github.com/vllm-project/vllm) servers.
+The sample [production](./containers/docker-compose-prod.yaml) configuration, uses 4 load balanced [vLLM](https://github.com/vllm-project/vllm) servers.
 
 The basic setup:
 
@@ -138,7 +138,7 @@ You can control the server through:
 
 ```sh
 cd /root/logdetective
-podman-compose -f docker-compose-prod.yaml ...
+podman-compose -f containers/docker-compose-prod.yaml ...
 ```
 
 The `/root` directory contains valuable data. If moving to a new instance,
@@ -299,7 +299,7 @@ dnf install postgresql
 
 ## Visual Studio Code testing with podman/docker-compose
 
-- In `Containerfile`, add `debugpy` as a dependency
+- In `containers/Containerfile`, add `debugpy` as a dependency
 
 ```diff
 +RUN pip3 install debugpy
@@ -311,7 +311,7 @@ dnf install postgresql
 make rebuild-server
 ```
 
-- Forward debugging port in `docker-compose.yaml` for `server` service.
+- Forward debugging port in `containers/docker-compose.yaml` for `server` service.
 
 ```diff
      ports:
@@ -355,7 +355,7 @@ make rebuild-server
 - Run the server
 
 ```sh
-podman-compose -f docker-compose-dev.yaml up server
+podman-compose -f containers/docker-compose-dev.yaml up server
 ```
 
 - Run Visual Stdio Code debug configuration named *Python Debug: Remote Attach*
